@@ -1,29 +1,36 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {removeTodo, updateTodo, editTodo} from '../features/todo/todoSlice'
+import {removeTodo, updateTodo, editTodo, completeTodo, addTodo} from '../features/todo/todoSlice'
 
 function Todos() {
     // const [isEditable, setIsEditable] = useState(false);
     const todos = useSelector(state => state.todos)
     const dispatch = useDispatch()
+    // const complete = ()=>{
+    //   // todos.isComplete === false ? todos.isComplete: "true" : return "false"
+    // }
   return (
     <>
     <div className='font-bold text-4xl tracking-wider py-5	text-orange-700	'>Todos</div>
     <ul className="list-none">
         {todos.map((todo) => (
+          
           <li
             className="mt-4 flex justify-between items-center bg-zinc-800 px-4 py-2 rounded"
             key={todo.id}
           >
-            <div className='text-white'>{todo.text}</div>
+            <input type='checkbox' onClick={()=>dispatch(completeTodo(todo.id))}
+            />
+            { todo.isComplete === false ? <div className='text-white'> {todo.text} </div>:<div className='text-red-700'> {todo.text} </div>}
             {/* <div className='text-white'>{todo.desc}</div> */}
+            <div className='grid grid-flow-col'>
             <button 
             onClick={()=> dispatch(editTodo({id: todo.id, text: todo.text}))}
-            className='text-white bg-red-500 py-1 px-4 rounded text-md'
+            className="text-white mx-2 bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
             >✏️</button>
             <button
              onClick={() => dispatch(removeTodo(todo.id))}
-              className="text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
+              className="text-white mx-2 bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +47,8 @@ function Todos() {
                 />
               </svg>
             </button>
+            </div>
+            
           </li>
         ))}
       </ul>
