@@ -9,9 +9,12 @@ function Todos() {
     // const complete = ()=>{
     //   // todos.isComplete === false ? todos.isComplete: "true" : return "false"
     // }
+    const debug = () => {
+      console.log(todos)
+    }
   return (
     <>
-    <div className='font-bold text-4xl tracking-wider py-5	text-orange-700	'>Todos</div>
+    <div className='font-bold text-4xl tracking-wider py-5	text-orange-700	' onClick={debug}>Todos</div>
     <ul className="list-none">
         {todos.map((todo) => (
           
@@ -19,15 +22,16 @@ function Todos() {
             className="mt-4 flex justify-between items-center bg-zinc-800 px-4 py-2 rounded"
             key={todo.id}
           >
-            <input type='checkbox' onClick={()=>dispatch(completeTodo(todo.id))}
+            <input type='checkbox' onClick={()=>dispatch(completeTodo(todo.id))} value={todo.isComplete}
             />
-            { todo.isComplete === false ? <div className='text-white'> {todo.text} </div>:<div className='text-red-700'> {todo.text} </div>}
+            { todo.isComplete === false ? <div className='text-white'> {todo.text} </div>:<div className='text-red-700 '> {todo.text} </div>}
             {/* <div className='text-white'>{todo.desc}</div> */}
             <div className='grid grid-flow-col'>
-            <button 
-            onClick={()=> dispatch(editTodo({id: todo.id, text: todo.text}))}
+            { todo.isComplete === false ?
+              <button 
+            onClick={ ()=> dispatch(editTodo({id: todo.id, text: todo.text}))}
             className="text-white mx-2 bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
-            >✏️</button>
+            >✏️</button>: <div></div>}
             <button
              onClick={() => dispatch(removeTodo(todo.id))}
               className="text-white mx-2 bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
