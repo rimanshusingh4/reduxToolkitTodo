@@ -24,7 +24,7 @@ function Todos() {
           >
             <input type='checkbox' onClick={()=>dispatch(completeTodo(todo.id))} value={todo.isComplete}
             />
-            { todo.isComplete === false ? <div className='text-white'> {todo.text} </div>:<div className='text-red-700 '> {todo.text} </div>}
+            { todo.isComplete === false ? <div className='text-white'> {todo.text} </div>:<div className='text-red-700 line-through'> {todo.text} </div>}
             {/* <div className='text-white'>{todo.desc}</div> */}
             <div className='grid grid-flow-col'>
             { todo.isComplete === false ?
